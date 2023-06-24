@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   const [entityText, setEntityText] = useState('');
   const [entities, setEntities] = useState([]);
 
@@ -58,3 +58,5 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+export default HomeScreen;

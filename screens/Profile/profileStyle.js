@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import appTheme from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,13 +48,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statisticsText: {
-    color: "blue",
+    color: appTheme.PRIMARY_COLOR,
     fontSize: 13,
     fontWeight: 'bold',
   },
   statisticsTitle: {
     fontSize: 13,
-    color: "#000",
+    color: appTheme.INACTIVE_COLOR,
   },
   profileCenterSection: {
     display: 'flex',
@@ -62,11 +63,11 @@ const styles = StyleSheet.create({
   nameText: {fontWeight: 'bold', fontSize: 16, marginBottom: 5},
   designationText: {
     fontSize: 12,
-    color: "cyan",
+    color: appTheme.INACTIVE_COLOR,
     marginBottom: 20,
   },
   editProfileWrapper: {
-    backgroundColor: "blue",
+    backgroundColor: appTheme.PRIMARY_COLOR,
     paddingHorizontal: 25,
     borderRadius: 5,
     paddingVertical: 10,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   exploreText: {
     fontWeight: 'bold',
     fontSize: 14,
-    color: 'blue',
+    color: appTheme.PRIMARY_COLOR,
   },
 });
 

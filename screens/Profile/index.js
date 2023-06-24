@@ -43,34 +43,7 @@ export function Profile({ navigation }) {
             </View>
           </View>
 
-          {/* Explore Section */}
-          <View style={styles.exploreSection}>
-            <Text style={styles.exploreHeader}>Explore</Text>
-            <View style={styles.exploreContent}>
-              <TouchableOpacity style={styles.singleExplore}>
-                <Ionicons name="people" size={22} color="#00BCC9" />
-                <Text style={styles.exploreText}>Members</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.singleExplore}>
-                <MaterialCommunityIcons name="crown" size={22} color="#00BCC9" />
-                <Text style={styles.exploreText}>Go Pro</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.singleExplore}>
-                <Fontisto name="pie-chart-1" size={22} color="#00BCC9" />
-                <Text style={styles.exploreText}>Report</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.singleExplore}>
-                <SimpleLineIcons name="settings" size={22} color="#00BCC9" />
-                <Text style={styles.exploreText}>Settings</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.singleExplore, { marginRight: 'auto', marginLeft: '7%' }]}
-              >
-                <MaterialCommunityIcons name="logout" size={22} color="#00BCC9" />
-                <Text style={styles.exploreText}>Log out</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          
         </View>
       </ScrollView>
     </SafeAreaView>
