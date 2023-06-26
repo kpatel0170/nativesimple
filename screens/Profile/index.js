@@ -10,13 +10,7 @@ export function Profile({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => handleBackButton('Members')} style={styles.backButton}>
-          <Ionicons name="arrow-back-outline" size={25} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Profile</Text>
-      </View>
+      
 
       {/* Content */}
       <ScrollView showsVerticalScrollIndicator={false}>
