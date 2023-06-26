@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
 
-import AppStack from './navigators/Stack';
+// import AppStack from './navigators/Stack';
+import RootStack from './navigators/RootStack';
 import {navigationRef} from './navigators/RootNavigation';
 
 export default function App() {
@@ -12,11 +13,11 @@ export default function App() {
     <>
       <PaperProvider>
         <StatusBar barStyle="light-content" />
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-          <NavigationContainer ref={navigationRef}>
-            <AppStack />
-          </NavigationContainer>
-        </SafeAreaView>
+        {/* <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}> */}
+          {/* <NavigationContainer ref={navigationRef}> */}
+            <RootStack />
+          {/* </NavigationContainer> */}
+        {/* </SafeAreaView> */}
       </PaperProvider>
     </>
   );
