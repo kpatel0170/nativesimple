@@ -1,13 +1,70 @@
-import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+// import { themeColors } from '../theme'
+import { useNavigation } from "@react-navigation/native";
 
-function Login({ navigation }) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Login Screen</Text>
-        <Button onPress={() => navigation.goBack()} title="Go back home" />
+export function Login() {
+  const navigation = useNavigation();
+  return (
+    <View className="flex-1 bg-white" style={{ backgroundColor: "white" }}>
+      <SafeAreaView className="flex ">
+        <View className="flex-row justify-start">
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            className=" p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
+          >
+            <Ionicons name='arrow-back-outline' size="20" color="black" />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row justify-center">
+          <Image
+            source={require("../../assets/favicon.png")}
+            style={{ width: 352, height: 132 }}
+          />
+        </View>
+      </SafeAreaView>
+      <View
+        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+        className="flex-1 bg-white px-8 pt-8"
+      >
+        <View className="form space-y-2">
+          <Text className="text-gray-700 ml-4">Email Address</Text>
+          <TextInput
+            className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
+            placeholder="email"
+            value="john@gmail.com"
+          />
+          <Text className="text-gray-700 ml-4">Password</Text>
+          <TextInput
+            className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
+            secureTextEntry
+            placeholder="password"
+            value="test12345"
+          />
+          <TouchableOpacity className="flex items-end">
+            <Text className="text-gray-700 mb-5">Forgot Password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="py-3 bg-[#0d8900] rounded-xl">
+            <Text className="text-xl font-bold text-center text-gray-200">
+              Login
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Text className="text-xl text-gray-700 font-bold text-center py-5">
+          Or
+        </Text>
+
+        <View className="flex-row justify-center mt-7">
+          <Text className="text-gray-500 font-semibold">
+            Don't have an account?
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+            <Text className="font-bold text-green-900"> Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    );
-  }
-
-export default Login;
+    </View>
+  );
+}
