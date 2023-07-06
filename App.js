@@ -1,24 +1,19 @@
-import React from 'react';
-import { StatusBar, StyleSheet, SafeAreaView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { Provider as PaperProvider } from 'react-native-paper';
-
-
-// import AppStack from './navigators/Stack';
-import RootStack from './navigators/RootStack';
-import {navigationRef} from './navigators/RootNavigation';
+import React from "react";
+import { StatusBar, StyleSheet } from "react-native";
+import { Provider } from "react-redux";
+import {store} from "./app/store";
+import {RootStack} from "./navigators/RootStack";
+import { AuthProvider } from "./context";
 
 export default function App() {
   return (
     <>
-      <PaperProvider>
-        <StatusBar barStyle="light-content" />
-        {/* <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}> */}
-          {/* <NavigationContainer ref={navigationRef}> */}
-            <RootStack />
-          {/* </NavigationContainer> */}
-        {/* </SafeAreaView> */}
-      </PaperProvider>
+      <Provider store={store}>
+      <StatusBar barStyle="dark-content" />
+          <AuthProvider>
+          <RootStack />
+          </AuthProvider>
+      </Provider>
     </>
   );
 }
