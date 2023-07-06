@@ -1,69 +1,235 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import {Ionicons} from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import API from "../../app/api";
+import { register } from "../../features/auth/AuthSlice";
 
-// subscribe for more videos like this :)
-export function Register() {
-    const navigation = useNavigation();
+export function Register({ navigation }) {
+  const dispatch = useDispatch();
+  const { isLoading, isRegistered } = useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+  });
+
+  const { name, email, password, passwordConfirmation } = formData;
+  const [visiblePassword, setVisiblePassword] = useState(true);
+
+  useEffect(() => {
+    if(!isLoading && isRegistered){
+    console.log("user is registered");
+    navigation.navigate("Login");
+    }
+  }, [isLoading, isRegistered, navigation]);
+
+  const formInputHandler = (name, value) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const registerFormHandler = async (event) => {
+    event.preventDefault();
+    const userData = {
+      name,
+      email,
+      password,
+      passwordConfirmation,
+    };
+
+    try {
+      const response = await API.post("auth/register", userData);
+        if(response.data.status === true){
+            alert("You have successfully registered!");
+        }
+      dispatch(register());
+    } catch (error) {
+      console.log(error);
+      if (error) {
+        alert(error);
+      } else {
+        alert("Please contact the administrator at katlin@farmsimple.ca!");
+      }
+    }
+  };
+
   return (
-    <View className="flex-1 bg-white" style={{backgroundColor: 'white'}}>
-      <SafeAreaView className="flex">
-        <View className="flex-row justify-start">
-            <TouchableOpacity 
-                onPress={()=> navigation.goBack()}
-                className="p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-            >
-                <Ionicons name='arrow-back-outline' size="20" color="black" />
-            </TouchableOpacity>
-        </View>
-        <View className="flex-row justify-center">
-            <Image source={require('../../assets/favicon.png')} 
-                style={{width: 264, height: 99}} />
-        </View>
-      </SafeAreaView>
-      <View className="flex-1 bg-white px-8 pt-8"
-        style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}}
-      >
-        <View className="form space-y-2">
-            <Text className="text-gray-700 ml-4">Full Name</Text>
-            <TextInput
-                className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                value="john snow"
-                placeholder='Enter Name'
-            />
-            <Text className="text-gray-700 ml-4">Email Address</Text>
-            <TextInput
-                className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
-                value="john@gmail.com"
-                placeholder='Enter Email'
-            />
-            <Text className="text-gray-700 ml-4">Password</Text>
-            <TextInput
-                className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-7"
-                secureTextEntry
-                value="test12345"
-                placeholder='Enter Password'
-            />
+    <ScrollView>
+      <View style={{ flex: 1, backgroundColor: "smokewhite" }}>
+        <SafeAreaView>
+          <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
             <TouchableOpacity
-                className="py-3 bg-[#0d8900] rounded-xl"
+              onPress={() => navigation.goBack()}
+              style={{ padding: 8, borderRadius: 30, marginLeft: 4 }}
             >
-                <Text className="font-xl font-bold text-center text-gray-200">
-                    Sign Up
-                </Text>
+              <Ionicons name="arrow-back-outline" size={20} color="black" />
             </TouchableOpacity>
-        </View>
-        <Text className="text-xl text-gray-700 font-bold text-center py-5">
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Image
+              source={require("../../assets/favicon.png")}
+              style={{ width: 264, height: 99 }}
+            />
+          </View>
+        </SafeAreaView>
+
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "smokewhite",
+            paddingHorizontal: 8,
+            paddingTop: 8,
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
+          }}
+        >
+          {isLoading && <ActivityIndicator size="large" color="your-loading-color" />}
+
+          <View style={{ padding: 16 }}>
+            <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 12 }}>Name</Text>
+            <TextInput
+              style={{
+                padding: 16,
+                backgroundColor: "white",
+                color: "black",
+                borderRadius: 20,
+                marginBottom: 8,
+              }}
+              onChangeText={(text) => formInputHandler("name", text)}
+              value={name}
+              placeholder="John Doe"
+              keyboardType="default"
+              editable={true}
+            />
+
+            <Text style={{ color:"gray", fontWeight: "bold", marginLeft: 12 }}>Email Address</Text>
+            <TextInput
+              style={{
+                padding: 16,
+                backgroundColor: "white",
+                color: "black",
+                borderRadius: 20,
+                marginBottom: 8,
+              }}
+              onChangeText={(text) => formInputHandler("email", text)}
+              value={email}
+              placeholder="example@email.com"
+              keyboardType="email-address"
+              editable={true}
+            />
+
+            <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 12 }}>Password</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "white",
+                borderRadius: 20,
+                marginBottom: 8,
+              }}
+            >
+              <TextInput
+                style={{
+                  padding: 16,
+                  backgroundColor: "white",
+                  color: "black",
+                  borderRadius: 20,
+                  flexGrow: 1,
+                }}
+                onChangeText={(text) => formInputHandler("password", text)}
+                value={password}
+                placeholder="********"
+                editable={true}
+                secureTextEntry={visiblePassword}
+              />
+              <TouchableOpacity
+                onPress={() => setVisiblePassword(!visiblePassword)}
+                style={{ padding: 10 }}
+              >
+                <Ionicons
+                  name={visiblePassword ? "eye-outline" : "eye-off-outline"}
+                  size={20}
+                  color="gray"
+                />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={{ color: "gray", fontWeight: "bold", marginLeft: 12 }}>Confirm Password</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "white",
+                borderRadius: 20,
+                marginBottom: 8,
+              }}
+            >
+              <TextInput
+                style={{
+                  padding: 16,
+                  backgroundColor: "white",
+                  color: "black",
+                  borderRadius: 20,
+                  flexGrow: 1,
+                }}
+                onChangeText={(text) => formInputHandler("passwordConfirmation", text)}
+                value={passwordConfirmation}
+                placeholder="********"
+                editable={true}
+                secureTextEntry={visiblePassword}
+              />
+              <TouchableOpacity
+                onPress={() => setVisiblePassword(!visiblePassword)}
+                style={{ padding: 10 }}
+              >
+                <Ionicons
+                  name={visiblePassword ? "eye-outline" : "eye-off-outline"}
+                  size={20}
+                  color="gray"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={{
+              padding: 16,
+              backgroundColor: "#0d8900",
+              borderRadius: 20,
+              margin: 16,
+            }}
+            onPress={registerFormHandler}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              Register
+            </Text>
+          </TouchableOpacity>
+
+          <Text style={{ fontSize: 20, fontWeight: "bold", color: "gray", textAlign: "center", paddingVertical: 5 }}>
             Or
-        </Text>
-        <View className="flex-row justify-center mt-7">
-            <Text className="text-gray-500 font-semibold">Already have an account?</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
-                <Text className="font-bold text-green-900"> Login</Text>
+          </Text>
+
+          <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 7 }}>
+            <Text style={{ color: "gray", fontWeight: "bold" }}>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <Text style={{ fontWeight: "bold", color: "green" }}>Login</Text>
             </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
-  )
+    </ScrollView>
+  );
 }
