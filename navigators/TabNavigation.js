@@ -8,7 +8,6 @@ import StackDevices from './StackDevices';
 import StackStats from './StackStats';
 import StackSettings from './StackSettings';
 
-
 const Tab = createBottomTabNavigator();
 
 export default () => {
@@ -38,7 +37,7 @@ export default () => {
       }}
     >
       <Tab.Screen
-        name="StackHome"
+        name="HomeTab"
         component={StackHome}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -52,7 +51,7 @@ export default () => {
         }}
       />
       <Tab.Screen
-        name="StackDevices"
+        name="DevicesTab"
         component={StackDevices}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -66,7 +65,7 @@ export default () => {
         }}
       />
       <Tab.Screen
-        name="StackStats"
+        name="StatsTab"
         component={StackStats}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -80,7 +79,7 @@ export default () => {
         }}
       />
       <Tab.Screen
-        name="StackSettings"
+        name="SettingsTab"
         component={StackSettings}
         options={{
           tabBarIcon: ({ focused }) => (
