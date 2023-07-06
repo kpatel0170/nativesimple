@@ -1,30 +1,39 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import {
-  CardStyleInterpolators,
-  createStackNavigator
-} from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
+import { LoadingIndicator } from '../components/LoadingIndicator';
 
-// tab naviation
-import TabNavigation from './TabNavigation';
+import { AuthStack } from './AuthStack';
+import { AppStack } from './AppStack';
 
 const Stack = createStackNavigator();
 
-export default () => (
-  <NavigationContainer>
-    <Stack.Navigator
-      screenOptions={{
-        cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-        presentation: 'modal'
-      }}
-    >
-      <Stack.Screen
-        name="TabNavigation"
-        component={TabNavigation}
-        options={{
-          headerShown: false
+export const RootStack = () => {
+  const { token, isLoading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // You can dispatch any actions here or perform any additional logic when the user or isLoading state changes
+  }, [token, isLoading]);
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
+      >
+        {token ? (
+          <Stack.Screen name="App" component={AppStack} />
+        ) : (
+          <Stack.Screen name="Auth" component={AuthStack} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
