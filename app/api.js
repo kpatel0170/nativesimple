@@ -1,5 +1,7 @@
 import axios from "axios";
 
-export default axios.create({
-  baseURL: "https://api.farmsimple.ca",
+const API = axios.create({
+  baseURL: "https://try-back.onrender.com/api/",
 });
+
+export default API;
