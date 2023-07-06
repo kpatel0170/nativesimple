@@ -2,10 +2,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 // import { themeColors } from '../theme'
-import { useNavigation } from '@react-navigation/native'
 
-export function Onboarding() {
-    const navigation = useNavigation();
+export function Onboarding({ navigation }) {
   return (
     <SafeAreaView className="flex-1" style={{backgroundColor: "whitesmoke"}}>
         <View className="flex-1 flex justify-around my-4">
